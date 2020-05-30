@@ -12,6 +12,17 @@ add_definitions(${OpenCV_DEFINITIONS})
 
 # Find all executables
 file(GLOB project_SRCS src/*.cpp) #src/*.h
+file(GLOB project_HEADERS src/*.h)
+
+# Target for clang-format
+add_custom_target(
+        clangformat
+        COMMAND /usr/bin/clang-format
+        -style=Google
+        -i
+        ${project_SRCS}
+        ${project_HEADERS}
+)
 
 # Add project executable
 add_executable(traffic_simulation ${project_SRCS})
