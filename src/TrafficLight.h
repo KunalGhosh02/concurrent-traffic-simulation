@@ -8,8 +8,8 @@
 #include "TrafficObject.h"
 
 enum TrafficLightPhase {
-    red,
-    green,
+  red,
+  green,
 };
 
 // forward declarations to avoid include cycle
@@ -24,14 +24,14 @@ class Vehicle;
 
 template <class T>
 class MessageQueue {
-   public:
-    void send(T &&MessageQueue);
-    T receive();
+ public:
+  void send(T &&MessageQueue);
+  T receive();
 
-   private:
-    std::deque<T> _queue;
-    std::condition_variable _condition_msgQ;
-    std::mutex _msgQmutex;
+ private:
+  std::deque<T> _queue;
+  std::condition_variable _condition_msgQ;
+  std::mutex _msgQmutex;
 };
 
 // FP.1 : Define a class „TrafficLight“ which is a child class of TrafficObject.
@@ -43,28 +43,28 @@ class MessageQueue {
 // value.
 
 class TrafficLight : TrafficObject {
-   public:
-    // constructor / desctructor
-    TrafficLight();
-    // getters / setters
-    TrafficLightPhase getCurrentPhase();
-    // typical behaviour methods
-    void waitForGreen();
-    void simulate();
+ public:
+  // constructor / desctructor
+  TrafficLight();
+  // getters / setters
+  TrafficLightPhase getCurrentPhase();
+  // typical behaviour methods
+  void waitForGreen();
+  void simulate();
 
-   private:
-    void cycleThroughPhases();
-    // typical behaviour methods
-    TrafficLightPhase _currentPhase;
+ private:
+  void cycleThroughPhases();
+  // typical behaviour methods
+  TrafficLightPhase _currentPhase;
 
-    // FP.4b : create a private member of type MessageQueue for messages of type
-    // TrafficLightPhase and use it within the infinite loop to push each new
-    // TrafficLightPhase into it by calling send in conjunction with move
-    // semantics.
+  // FP.4b : create a private member of type MessageQueue for messages of type
+  // TrafficLightPhase and use it within the infinite loop to push each new
+  // TrafficLightPhase into it by calling send in conjunction with move
+  // semantics.
 
-    std::condition_variable _condition;
-    std::mutex _mutex;
-    MessageQueue<TrafficLightPhase> _msgQ;
+  std::condition_variable _condition;
+  std::mutex _mutex;
+  MessageQueue<TrafficLightPhase> _msgQ;
 };
 
 #endif
